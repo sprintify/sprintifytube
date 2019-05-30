@@ -61,6 +61,8 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.isAuthenticated = true;
+
+        this.$router.push("/dashboard")
       }
     });
   },

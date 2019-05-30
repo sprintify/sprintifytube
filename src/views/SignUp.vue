@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>
     <div class="columns">
@@ -47,33 +48,35 @@
 import firebase from "firebase";
 
 export default {
-  name: "signup",
-  data() {
-    return {
-      email: "", // v-model="email"
-      password: "", // v-model="password"
-      isAuthenticated: false, // signed in true or false
-      error: null
-    };
-  },
-  // verify if email and password is written = true)
-  created() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.isAuthenticated = true;
-      }
-    });
-  },
-  // giving firebase information  INPUT email and password
-  methods: {
-    signUp() {
-      console.log("Sign up");
+	name: "signup",
+	data () {
+		return {
+			email: "", // v-model="email"
+			password: "", // v-model="password"
+			isAuthenticated: false, // signed in true or false
+			error: null
+		};
+	},
+	// verify if email and password is written = true)
+	created () {
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				this.isAuthenticated = true;
 
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .catch(error => (this.error = error.message));
-    }
-  }
+				this.$router.push("/dashboard");
+			}
+		});
+	},
+	// giving firebase information  INPUT email and password
+	methods: {
+		signUp () {
+			console.log("Sign up");
+
+			firebase
+				.auth()
+				.createUserWithEmailAndPassword(this.email, this.password)
+				.catch(error => (this.error = error.message));
+		}
+	}
 };
 </script>

@@ -23,18 +23,28 @@
           <router-link to="/" class="navbar-item">Home</router-link>
           <router-link to="/about" class="navbar-item">About</router-link>
         </div>
+
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="field is-grouped">
+            <div class="field is-grouped" v-if="!isAuthenticated">
               <p class="control">
                 <router-link to="/signup" class="navbar-item button is-primary"
                   >Sign up</router-link
                 >
               </p>
+
               <p class="control">
                 <router-link to="/login" class="navbar-item button is-info"
                   >Log in</router-link
                 >
+              </p>
+            </div>
+
+            <div class="field" v-else>
+              <p class="control">
+                <button class="button is-danger" @click="logout">
+                  Log out
+                </button>
               </p>
             </div>
           </div>
@@ -45,6 +55,35 @@
     <router-view />
   </div>
 </template>
+
+<script>
+import firebase from "firebase";
+export default {
+  data() {
+    return {
+      isAuthenticated: false
+    };
+  },
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.isAuthenticated = true;
+      }
+    });
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.isAuthenticated = false;
+          this.$router.push("/login");
+        });
+    }
+  }
+};
+</script>
 
 <style>
 @import "../node_modules/bulma/css/bulma.css";
