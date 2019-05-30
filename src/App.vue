@@ -1,16 +1,53 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <router-link to="/signup">Sign up</router-link>
-      <router-link to="/login">Log in</router-link>
-    </div>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          SprintifyTube
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <router-link to="/" class="navbar-item">Home</router-link>
+          <router-link to="/about" class="navbar-item">About</router-link>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <router-link to="/signup" class="navbar-item button is-primary"
+                  >Sign up</router-link
+                >
+              </p>
+              <p class="control">
+                <router-link to="/login" class="navbar-item button is-info"
+                  >Log in</router-link
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <router-view />
   </div>
 </template>
 
 <style>
+@import "../node_modules/bulma/css/bulma.css";
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

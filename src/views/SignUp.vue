@@ -1,16 +1,45 @@
 <template>
   <div>
-    <h1>Sign up</h1>
-    <form @submit.prevent="signUp">
-      <input type="email" placeholder="Email" v-model="email" /><br />
-      <input type="password" placeholder="Password" v-model="password" /><br />
+    <div class="columns">
+      <div class="column is-4 is-offset-4">
+        <h1 class="title">Sign Up</h1>
 
-      <button>Submit</button>
-    </form>
+        <form @submit.prevent="signUp">
+          <div class="field">
+            <div class="control">
+              <input
+                type="email"
+                placeholder="Email"
+                class="input"
+                v-model="email"
+              /><br />
+            </div>
+          </div>
 
-    <hr />
+          <div class="field">
+            <div class="control">
+              <input
+                type="password"
+                placeholder="Password"
+                class="input"
+                v-model="password"
+              /><br />
+            </div>
+          </div>
 
-    Signed in: {{ isAuthenticated }}
+          <div class="field">
+            <div class="control">
+              <button class="button is-success">Submit</button>
+            </div>
+          </div>
+          <article class="message is-danger" v-if="error">
+            <div class="message-body">
+              {{ error }}
+            </div>
+          </article>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,7 +52,8 @@ export default {
     return {
       email: "", // v-model="email"
       password: "", // v-model="password"
-      isAuthenticated: false // signed in true or false
+      isAuthenticated: false, // signed in true or false
+      error: null
     };
   },
   // verify if email and password is written = true)
@@ -42,7 +72,7 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .catch(error => alert(error.message));
+        .catch(error => (this.error = error.message));
     }
   }
 };
